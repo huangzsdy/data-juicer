@@ -1,0 +1,50 @@
+#base clean pipeline
+project_name: "base_pipeline"
+
+# 数据集路径 - 修改为你的实际数据路径
+dataset_path: "/data/mc2/mn/mc2_mn_traditional.jsonl"
+
+# 输出路径
+export_path: "./outputs/base_pipeline/mn_train.jsonl"
+
+# 处理进程数
+np: 4
+
+# process schedule
+# a list of several process operators with their arguments
+process:
+  # 清理email
+  - clean_email_mapper:
+
+  # 清理html tag
+  - clean_html_mapper:
+
+  # 清理ip
+  - clean_ip_mapper:
+
+  # 清理链接
+  - clean_links_mapper:
+
+  # 清理版权声明
+  - clean_copyright_mapper:
+
+  # 清理空格、制表符、换行符
+  - whitespace_normalization_mapper:
+
+  # 修复unicode
+  - fix_unicode_mapper:
+
+  # 统一标点格式
+  - punctuation_normalization_mapper:
+
+  # 过滤标点符号比例
+  - alphanumeric_filter:
+      tokenization: false
+      min_ratio: 0.0
+      max_ratio: 0.9
+
+  # 字符重复比例过滤
+  - character_repetition_filter:
+      rep_len: 10
+      min_ratio: 0.0
+      max_ratio: 0.5

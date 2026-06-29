@@ -1,0 +1,17 @@
+#language_id_score_filter
+project_name: "language_id_score_filter"
+
+# 数据集路径 - 修改为你的实际数据路径
+dataset_path: "/data/mc2/mixed/pkupie__mc2_corpus_train.jsonl"
+
+# 输出路径
+export_path: "./outputs/language_filter/mn_train.jsonl"
+
+# 处理进程数
+np: 4
+
+# process schedule
+process:
+  - language_id_score_filter:
+      lang: "mn"
+      min_score: 0.8
